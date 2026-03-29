@@ -19,3 +19,27 @@ package-lock.json
 # Exclude dev dependencies from node_modules (if present in workspace)
 node_modules/@types/**
 node_modules/typescript/**
+
+# npm / yarn: pulled in by @oclif/plugin-plugins for plugin management.
+# Never used at runtime since we only invoke backlog-exporter's own commands.
+node_modules/npm/**
+node_modules/yarn/**
+
+# @vscode/codicons: only codicon.css + codicon.ttf are loaded by the webview.
+node_modules/@vscode/codicons/dist/codicon.html
+node_modules/@vscode/codicons/dist/codicon.svg
+node_modules/@vscode/codicons/dist/codicon.csv
+node_modules/@vscode/codicons/dist/codiconsLibrary.ts
+node_modules/@vscode/codicons/dist/metadata.json
+node_modules/@vscode/codicons/src/**
+node_modules/@vscode/codicons/preview.png
+node_modules/@vscode/codicons/*.md
+
+# General cleanup: test files, changelogs, docs across all packages
+node_modules/**/test/**
+node_modules/**/__tests__/**
+node_modules/**/CHANGELOG*
+node_modules/**/CHANGES*
+node_modules/**/README*
+node_modules/**/docs/**
+node_modules/**/*.d.ts
