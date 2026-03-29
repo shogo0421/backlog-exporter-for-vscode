@@ -2,7 +2,15 @@
   "name": "backlog-exporter-for-vscode",
   "displayName": "Backlog Exporter",
   "description": "Export Backlog issues, wiki, and documents to Markdown files",
+  "license": "MIT",
+  "keywords": [
+    "backlog",
+    "export",
+    "markdown",
+    "cursor"
+  ],
   "version": "0.1.0",
+  "publisher": "shibuya-shogo",
   "categories": [
     "Other"
   ],
