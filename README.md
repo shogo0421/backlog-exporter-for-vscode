@@ -4,9 +4,9 @@ Backlog のデータをエクスポートするためのVS Code / Cursor 拡張�
 
 CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) をVSCode/Cursor拡張機能にしたものです。
 
-<img src="https://github.com/user-attachments/assets/62466f5b-f173-4c23-90a4-8e5811ff4aff" />
+エクスポートしたデータを、Copilot や Cursor などの AI ツールから参照して、コンテキストとして活用できます。
 
-エクスポートしたデータを Copilot や Cursor などの AI ツールから参照することで、RAG（Retrieval Augmented Generation）のように利用することを想定しています。
+<img src="https://github.com/user-attachments/assets/62466f5b-f173-4c23-90a4-8e5811ff4aff" />
 
 ---
 
