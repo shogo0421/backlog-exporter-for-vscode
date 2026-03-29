@@ -43,6 +43,11 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
     // Webview → Extension: handle messages
     webviewView.webview.onDidReceiveMessage(async (message) => {
       switch (message.command) {
+        case 'cancel': {
+          this._cancelTokenSource?.cancel()
+          break
+        }
+
         case 'changeApiKey': {
           await this._changeApiKey()
           break
@@ -84,11 +89,6 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
 
         case 'exportWiki': {
           await this._runExport('wiki', 'wiki')
-          break
-        }
-
-        case 'cancel': {
-          this._cancelTokenSource?.cancel()
           break
         }
 
