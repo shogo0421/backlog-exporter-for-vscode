@@ -12,13 +12,21 @@ CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) 
 
 ## 機能
 
-| 機能                 | 内容                                       | CLIコマンド                                                                                                                                       |
-| -------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Export All**       | 課題・Wiki・ドキュメントを一括エクスポート | `backlog-exporter all --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data --apiKey ****`                |
-| **Export Issues**    | 課題のみエクスポート                       | `backlog-exporter issue --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/issues --apiKey ****`       |
-| **Export Wiki**      | Wiki ページをエクスポート                  | `backlog-exporter wiki --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/wiki --apiKey ****`          |
-| **Export Documents** | ドキュメントをエクスポート                 | `backlog-exporter document --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/documents --apiKey ****` |
-| **Update**           | 前回エクスポート以降の差分のみ更新         | `backlog-exporter update /absolute-path/backlog-data --force --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --apiKey ****`              |
+- **Export All** — 課題・Wiki・ドキュメントを一括エクスポート
+- **Export Issues** — 課題のみエクスポート
+- **Export Wiki** — Wiki ページをエクスポート
+- **Export Documents** — ドキュメントをエクスポート
+- **Update** — 前回エクスポート以降の差分のみ更新
+
+拡張の各機能に対応する CLI の例は次のとおりです。
+
+| 機能                 | CLI（例）                                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Export All**       | `backlog-exporter all --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data --apiKey ****`                |
+| **Export Issues**    | `backlog-exporter issue --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/issues --apiKey ****`       |
+| **Export Wiki**      | `backlog-exporter wiki --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/wiki --apiKey ****`          |
+| **Export Documents** | `backlog-exporter document --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/documents --apiKey ****` |
+| **Update**           | `backlog-exporter update /absolute-path/backlog-data --force --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --apiKey ****`              |
 
 ---
 
