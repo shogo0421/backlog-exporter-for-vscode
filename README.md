@@ -1,34 +1,24 @@
 # Backlog Exporter for VS Code
 
-Backlog のプロジェクトデータ（課題・Wiki・ドキュメント）をマークダウンファイルとしてローカルに保存する VS Code / Cursor 拡張機能です。
+Backlog のデータをエクスポートするためのVS Code / Cursor 拡張機能
 
-エクスポートしたデータを `@workspace` で AI に読み込ませることで、Backlog の情報を自然言語で検索・質問できるようになります。
+CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) をVSCode/Cursor拡張機能にしたものです。
+
+<img src="https://github.com/user-attachments/assets/62466f5b-f173-4c23-90a4-8e5811ff4aff" />
+
+エクスポートしたデータを Copilot や Cursor などの AI ツールから参照することで、RAG（Retrieval Augmented Generation）のように利用することを想定しています。
 
 ---
 
 ## 機能
 
-- **Export All** — 課題・Wiki・ドキュメントを一括エクスポート
-- **Export Issues** — 課題のみエクスポート
-- **Export Wiki** — Wiki ページをエクスポート
-- **Export Documents** — ドキュメントをエクスポート
-- **Update** — 前回エクスポート以降の差分のみ更新
-
----
-
-## インストール
-
-[Releases](https://github.com/shogo0421/backlog-exporter-for-vscode/releases) ページから `.vsix` ファイルをダウンロードし、以下のコマンドでインストールします。
-
-```bash
-# VS Code
-code --install-extension backlog-exporter-for-vscode-0.1.0.vsix
-
-# Cursor
-cursor --install-extension backlog-exporter-for-vscode-0.1.0.vsix
-```
-
-または拡張機能パネル（`⌘⇧X`）の `...` メニューから **Install from VSIX...** を選択してください。
+| 機能 | 内容 | CLI（例） |
+| ---- | ---- | --------- |
+| **Export All** | 課題・Wiki・ドキュメントを一括エクスポート | `backlog-exporter all --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data --apiKey ****` |
+| **Export Issues** | 課題のみエクスポート | `backlog-exporter issue --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/issues --apiKey ****` |
+| **Export Wiki** | Wiki ページをエクスポート | `backlog-exporter wiki --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/wiki --apiKey ****` |
+| **Export Documents** | ドキュメントをエクスポート | `backlog-exporter document --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/documents --apiKey ****` |
+| **Update** | 前回エクスポート以降の差分のみ更新 | `backlog-exporter update /absolute-path/backlog-data --force --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --apiKey ****` |
 
 ---
 
@@ -47,14 +37,14 @@ cursor --install-extension backlog-exporter-for-vscode-0.1.0.vsix
 | **API Key** | Backlog の API キー                                      |
 | **出力先**  | エクスポート先ディレクトリ（デフォルト: `backlog-data`） |
 
-各行の鉛筆アイコンをクリックすると編集できます。設定は自動的に保存されるため **2 回目以降は入力不要**です。
+各行の鉛筆アイコンをクリックすると編集できます。設定は自動的に保存されます。
 
-> **API キーの保存先**
-> API キーは VS Code の SecretStorage（macOS では Keychain）に暗号化して保存されます。`settings.json` には記録されません。
+> **API キーの保存先**  
+> API キーは VS Code の SecretStorage（macOS では Keychain）に暗号化して保存されます。
 
 ### 3. エクスポートを実行する
 
-ボタンをクリックするだけでエクスポートが開始されます。実行中はボタンが無効化され、進捗がリアルタイムに表示されます。
+ボタンをクリックしてエクスポートを開始します。実行中はボタンが無効化され、進捗がリアルタイムに表示されます。
 
 ### 4. 出力先について
 
@@ -62,9 +52,21 @@ cursor --install-extension backlog-exporter-for-vscode-0.1.0.vsix
 - **絶対パス** — そのまま使用されます（例: `/Users/yourname/backlog`）
 - **`~/` パス** — ホームディレクトリに展開されます（例: `~/backlog`）
 
-CLI でエクスポート済みのディレクトリがある場合は、出力先をそのディレクトリに変更することで **Update** コマンドが差分更新として機能します。
+CLI でエクスポート済みのディレクトリがある場合は、出力先をそのディレクトリに変更することで **Update** ボタンから差分更新が可能です。
 
 ---
+
+## ドメインとプロジェクトキーの取得方法
+
+1. Backlog のプロジェクトページに移動
+2. URLをコピー
+
+```
+https://example.backlog.jp/projects/PROJECT1
+```
+
+- ドメイン: example.backlog.jp
+- プロジェクトキー: PROJECT1
 
 ## API キーの取得方法
 
@@ -100,10 +102,11 @@ VS Code の設定（`settings.json`）から変更できます。
 
 ---
 
-## 動作要件
+## 出力形式
 
-- VS Code 1.85.0 以上（または Cursor）
-- Node.js（拡張機能に同梱）
+出力されるファイルの形式については、CLIツール `backlog-exporter` の README をご確認ください。
+
+- [backlog-exporter README - 出力形式](https://github.com/ShuntaToda/backlog-exporter/blob/main/README.md#%E5%87%BA%E5%8A%9B%E5%BD%A2%E5%BC%8F)
 
 ---
 
