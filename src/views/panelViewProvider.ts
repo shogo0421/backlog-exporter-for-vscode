@@ -1,13 +1,14 @@
 import * as vscode from 'vscode'
 
 import {ConfigManager} from '../config/configManager'
-import {BacklogCommand, runBacklogExporter} from '../runner/backlogRunner'
+import {BacklogCommand, CancelledError, runBacklogExporter} from '../runner/backlogRunner'
 import {resolveOutputDir} from '../utils/resolveOutputDir'
 import {getPanelHtml} from './panelHtml'
 
 export class PanelViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewId = 'backlogExporter.panel'
   private _apiKeyVisible = false
+  private _cancelTokenSource?: vscode.CancellationTokenSource
   private _running = false
   private _view?: vscode.WebviewView
 
@@ -83,6 +84,11 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
 
         case 'exportWiki': {
           await this._runExport('wiki', 'wiki')
+          break
+        }
+
+        case 'cancel': {
+          this._cancelTokenSource?.cancel()
           break
         }
 
@@ -186,6 +192,7 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
 
     const outputDir = resolveOutputDir(workspaceFolder, exportSettings.outputDirectory, subDir)
 
+    this._cancelTokenSource = new vscode.CancellationTokenSource()
     this._setRunning(true)
     this._post({text: `${command} のエクスポートを開始...`, type: 'log'})
 
@@ -206,15 +213,22 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
             }
           },
         },
+        this._cancelTokenSource.token,
       )
       const now = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})
       this._post({text: `完了 (${now})`, type: 'done'})
       vscode.window.showInformationMessage(`Backlog: ${command} のエクスポートが完了しました。`)
     } catch (error) {
-      const msg = error instanceof Error ? error.message : String(error)
-      this._post({text: msg, type: 'error'})
-      this._showError(error)
+      if (error instanceof CancelledError) {
+        this._post({text: 'キャンセルしました', type: 'error'})
+      } else {
+        const msg = error instanceof Error ? error.message : String(error)
+        this._post({text: msg, type: 'error'})
+        this._showError(error)
+      }
     } finally {
+      this._cancelTokenSource.dispose()
+      this._cancelTokenSource = undefined
       this._setRunning(false)
       this._pushConfig()
     }
@@ -237,6 +251,7 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
 
     const outputDir = resolveOutputDir(workspaceFolder, exportSettings.outputDirectory)
 
+    this._cancelTokenSource = new vscode.CancellationTokenSource()
     this._setRunning(true)
     this._post({text: '全データのエクスポートを開始...', type: 'log'})
 
@@ -257,15 +272,22 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
             }
           },
         },
+        this._cancelTokenSource.token,
       )
       const now = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})
       this._post({text: `完了 (${now})`, type: 'done'})
       vscode.window.showInformationMessage('Backlog: 全データのエクスポートが完了しました。')
     } catch (error) {
-      const msg = error instanceof Error ? error.message : String(error)
-      this._post({text: msg, type: 'error'})
-      this._showError(error)
+      if (error instanceof CancelledError) {
+        this._post({text: 'キャンセルしました', type: 'error'})
+      } else {
+        const msg = error instanceof Error ? error.message : String(error)
+        this._post({text: msg, type: 'error'})
+        this._showError(error)
+      }
     } finally {
+      this._cancelTokenSource.dispose()
+      this._cancelTokenSource = undefined
       this._setRunning(false)
     }
   }
@@ -287,6 +309,7 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
 
     const outputDir = resolveOutputDir(workspaceFolder, exportSettings.outputDirectory)
 
+    this._cancelTokenSource = new vscode.CancellationTokenSource()
     this._setRunning(true)
     this._post({text: 'データの更新を開始...', type: 'log'})
 
@@ -307,15 +330,22 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
             }
           },
         },
+        this._cancelTokenSource.token,
       )
       const now = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})
       this._post({text: `更新完了 (${now})`, type: 'done'})
       vscode.window.showInformationMessage('Backlog: データの更新が完了しました。')
     } catch (error) {
-      const msg = error instanceof Error ? error.message : String(error)
-      this._post({text: msg, type: 'error'})
-      vscode.window.showErrorMessage(`Backlog 更新失敗: ${msg}`)
+      if (error instanceof CancelledError) {
+        this._post({text: 'キャンセルしました', type: 'error'})
+      } else {
+        const msg = error instanceof Error ? error.message : String(error)
+        this._post({text: msg, type: 'error'})
+        vscode.window.showErrorMessage(`Backlog 更新失敗: ${msg}`)
+      }
     } finally {
+      this._cancelTokenSource.dispose()
+      this._cancelTokenSource = undefined
       this._setRunning(false)
     }
   }

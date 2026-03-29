@@ -82,6 +82,10 @@
         <span class="status-text" id="status-text">待機中</span>
         <a class="log-link" onclick="send('openOutputChannel')">ログ</a>
       </div>
+      <button class="btn btn-cancel" id="btn-cancel" style="display:none" onclick="send('cancel')">
+        <span class="btn-icon"><i class="codicon codicon-stop-circle"></i></span>
+        <span class="btn-text">キャンセル</span>
+      </button>
     </section>
 
     <script src="__PANEL_JS_URI__"></script>

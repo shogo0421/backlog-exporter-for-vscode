@@ -23,6 +23,7 @@ function setRunning(running, cmd) {
   Object.entries(spinMap).forEach(([c, spinId]) => {
     document.getElementById(spinId).style.display = running && c === cmd ? 'block' : 'none'
   })
+  document.getElementById('btn-cancel').style.display = running ? 'flex' : 'none'
 }
 
 window.addEventListener('message', (event) => {

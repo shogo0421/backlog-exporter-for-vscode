@@ -9,7 +9,8 @@ import path from 'node:path'
  * @returns 正規化された出力ディレクトリの絶対パス
  */
 export function resolveOutputDir(workspaceFolder: string, outputDirectory: string, subDir?: string): string {
-  const expanded = outputDirectory.startsWith('~') ? path.join(os.homedir(), outputDirectory.slice(1)) : outputDirectory
+  const dir = outputDirectory.trim() || 'backlog-data'
+  const expanded = dir.startsWith('~') ? path.join(os.homedir(), dir.slice(1)) : dir
 
   const base = path.isAbsolute(expanded) ? path.resolve(expanded) : path.resolve(workspaceFolder, expanded)
 

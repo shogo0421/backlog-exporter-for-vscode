@@ -28,10 +28,18 @@ function resolveRunScript(): string {
   )
 }
 
+export class CancelledError extends Error {
+  constructor() {
+    super('キャンセルしました')
+    this.name = 'CancelledError'
+  }
+}
+
 export function runBacklogExporter(
   options: RunOptions,
   outputChannel: vscode.OutputChannel,
   progress: vscode.Progress<{message?: string}>,
+  token?: vscode.CancellationToken,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     const runScript = resolveRunScript()
@@ -52,6 +60,13 @@ export function runBacklogExporter(
     // 別プロセスで `backlog-exporter` を実行
     const child = cp.spawn(nodeExec, args, {
       env: {...process.env, BACKLOG_API_KEY: options.apiKey},
+    })
+
+    let cancelled = false
+    const cancelDisposable = token?.onCancellationRequested(() => {
+      cancelled = true
+      child.kill()
+      outputChannel.appendLine('[backlog-exporter] キャンセルしました')
     })
 
     let lineBuffer = ''
@@ -80,11 +95,15 @@ export function runBacklogExporter(
     })
 
     child.on('close', (code) => {
+      cancelDisposable?.dispose()
+
       if (lineBuffer.trim()) {
         outputChannel.appendLine(lineBuffer)
       }
 
-      if (code === 0 && stderrLines.length === 0) {
+      if (cancelled) {
+        reject(new CancelledError())
+      } else if (code === 0 && stderrLines.length === 0) {
         outputChannel.appendLine(`[backlog-exporter] 完了しました`)
         resolve()
       } else if (stderrLines.length > 0) {

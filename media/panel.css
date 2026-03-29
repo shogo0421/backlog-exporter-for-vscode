@@ -120,6 +120,15 @@ section {
   background: var(--vscode-button-secondaryHoverBackground);
 }
 
+.btn-cancel {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-errorForeground);
+  margin-top: 6px;
+}
+.btn-cancel:hover:not(:disabled) {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
 .btn-icon {
   font-size: 14px;
   display: flex;
