@@ -1,0 +1,104 @@
+{
+  "name": "backlog-exporter-for-vscode",
+  "displayName": "Backlog Exporter",
+  "description": "Export Backlog issues, wiki, and documents to Markdown files",
+  "version": "0.1.0",
+  "categories": [
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shogo0421/backlog-exporter-for-vscode"
+  },
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "backlogExporter",
+          "title": "Backlog Exporter",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "backlogExporter": [
+        {
+          "type": "webview",
+          "id": "backlogExporter.panel",
+          "name": "Backlog Exporter"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "backlogExporter.exportIssues",
+        "title": "Backlog: Export Issues"
+      },
+      {
+        "command": "backlogExporter.exportWiki",
+        "title": "Backlog: Export Wiki"
+      },
+      {
+        "command": "backlogExporter.exportDocuments",
+        "title": "Backlog: Export Documents"
+      },
+      {
+        "command": "backlogExporter.exportAll",
+        "title": "Backlog: Export All"
+      },
+      {
+        "command": "backlogExporter.update",
+        "title": "Backlog: Update"
+      }
+    ],
+    "configuration": {
+      "title": "Backlog Exporter",
+      "properties": {
+        "backlogExporter.domain": {
+          "type": "string",
+          "default": "",
+          "description": "Backlog domain (e.g. yourspace.backlog.jp)"
+        },
+        "backlogExporter.projectIdOrKey": {
+          "type": "string",
+          "default": "",
+          "description": "Backlog project ID or key"
+        },
+        "backlogExporter.outputDirectory": {
+          "type": "string",
+          "default": "backlog-data",
+          "description": "Output directory relative to workspace root"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "vite build --mode development",
+    "watch": "vite build --watch --mode development",
+    "package": "vite build --mode production",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.45",
+    "backlog-exporter": "^0.7.1"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/prettier-config": "^0.2.1",
+    "@types/node": "^18",
+    "@types/vscode": "^1.85.0",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "prettier": "^3.6.2",
+    "typescript": "^5",
+    "vite": "^6.2.0"
+  }
+}

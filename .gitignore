@@ -1,0 +1,13 @@
+*-debug.log
+*-error.log
+**/.DS_Store
+/.idea
+/dist
+/tmp
+/node_modules
+.env
+*.vsix
+.vscode-test
+*.tsbuildinfo
+.claude
+/backlog

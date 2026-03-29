@@ -1,0 +1,21 @@
+.vscode/**
+.vscode-test/**
+.claude/**
+src/**
+out/**
+tsconfig.json
+.gitignore
+.eslintrc*
+eslint.config.*
+**/*.map
+backlog/**
+
+# Dev / tooling (not needed in .vsix)
+vite.config.ts
+.prettierrc.json
+.prettierignore
+package-lock.json
+
+# Exclude dev dependencies from node_modules (if present in workspace)
+node_modules/@types/**
+node_modules/typescript/**

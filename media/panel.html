@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="__CODICON_CSS_URI__" />
+    <link rel="stylesheet" href="__PANEL_CSS_URI__" />
+  </head>
+  <body>
+    <section>
+      <div class="section-title">設定</div>
+      <div class="config-row" id="row-domain" onclick="send('changeDomain')" title="クリックして変更">
+        <span class="config-label">Domain</span>
+        <span class="config-value" id="val-domain">未設定</span>
+        <i class="codicon codicon-edit edit-icon"></i>
+      </div>
+      <div class="config-row" id="row-project" onclick="send('changeProject')" title="クリックして変更">
+        <span class="config-label">Project</span>
+        <span class="config-value" id="val-project">未設定</span>
+        <i class="codicon codicon-edit edit-icon"></i>
+      </div>
+      <div class="config-row" onclick="send('changeApiKey')" title="クリックして編集">
+        <span class="config-label">API Key</span>
+        <span class="config-value" id="val-apikey">••••••••</span>
+        <button
+          class="icon-btn"
+          id="btn-toggle-apikey"
+          title="表示する"
+          onclick="
+            event.stopPropagation()
+            send('toggleApiKey')
+          "
+        >
+          <i class="codicon codicon-eye"></i>
+        </button>
+        <i class="codicon codicon-edit edit-icon"></i>
+      </div>
+      <div class="config-row" id="row-output" onclick="send('changeOutputDirectory')" title="クリックして変更">
+        <span class="config-label">出力先</span>
+        <span class="config-value" id="val-output">backlog-data</span>
+        <i class="codicon codicon-edit edit-icon"></i>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">エクスポート</div>
+      <button class="btn btn-primary" id="btn-all" onclick="send('exportAll')">
+        <span class="btn-icon"><i class="codicon codicon-desktop-download"></i></span>
+        <span class="btn-text">Export All</span>
+        <span class="spinner" id="spin-all"></span>
+      </button>
+      <button class="btn btn-secondary" id="btn-issues" onclick="send('exportIssues')">
+        <span class="btn-icon"><i class="codicon codicon-issues"></i></span>
+        <span class="btn-text">Export Issues</span>
+        <span class="spinner" id="spin-issues"></span>
+      </button>
+      <button class="btn btn-secondary" id="btn-wiki" onclick="send('exportWiki')">
+        <span class="btn-icon"><i class="codicon codicon-book"></i></span>
+        <span class="btn-text">Export Wiki</span>
+        <span class="spinner" id="spin-wiki"></span>
+      </button>
+      <button class="btn btn-secondary" id="btn-docs" onclick="send('exportDocuments')">
+        <span class="btn-icon"><i class="codicon codicon-file-text"></i></span>
+        <span class="btn-text">Export Documents</span>
+        <span class="spinner" id="spin-docs"></span>
+      </button>
+    </section>
+
+    <section>
+      <div class="section-title">更新</div>
+      <button class="btn btn-secondary" id="btn-update" onclick="send('update')">
+        <span class="btn-icon"><i class="codicon codicon-sync"></i></span>
+        <span class="btn-text">Update</span>
+        <span class="spinner" id="spin-update"></span>
+      </button>
+    </section>
+
+    <section>
+      <div class="section-title">状態</div>
+      <div class="status-bar">
+        <div class="status-dot" id="status-dot"></div>
+        <span class="status-text" id="status-text">待機中</span>
+        <a class="log-link" onclick="send('openOutputChannel')">ログ</a>
+      </div>
+    </section>
+
+    <script src="__PANEL_JS_URI__"></script>
+  </body>
+</html>
