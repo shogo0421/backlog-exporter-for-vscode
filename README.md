@@ -6,7 +6,7 @@ CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) 
 
 エクスポートしたデータを、Copilot や Cursor などの AI ツールから参照して、コンテキストとして活用できます。
 
-<img src="https://github.com/user-attachments/assets/62466f5b-f173-4c23-90a4-8e5811ff4aff" />
+<img src="https://github.com/shogo0421/backlog-exporter-for-vscode/blob/main/media/images/demo.png?raw=true" />
 
 ---
 
@@ -26,7 +26,7 @@ CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) 
 | **Export Issues**    | `backlog-exporter issue --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/issues --apiKey ****`       |
 | **Export Wiki**      | `backlog-exporter wiki --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/wiki --apiKey ****`          |
 | **Export Documents** | `backlog-exporter document --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --output /absolute-path/backlog-data/documents --apiKey ****` |
-| **Update**           | `backlog-exporter update /absolute-path/backlog-data --force --domain example.backlog.jp --projectIdOrKey PROJECT_KEY --apiKey ****`              |
+| **Update**           | `backlog-exporter update /absolute-path/backlog-data --force --apiKey ****`                                                                       |
 
 ---
 
