@@ -10,6 +10,11 @@ export interface BacklogExportSettings {
   projectIdOrKey: string
 }
 
+export interface BacklogUpdateSettings {
+  apiKey: string
+  outputDirectory: string
+}
+
 export class ConfigManager {
   constructor(private readonly secrets: vscode.SecretStorage) {}
 
@@ -67,6 +72,31 @@ export class ConfigManager {
     }
 
     return {apiKey, domain, outputDirectory, projectIdOrKey}
+  }
+
+  /**
+   * update コマンドに必要な設定（API キーと出力先のみ）を返す。
+   * ドメイン・プロジェクトキーは CLI が設定ファイルから取得するため不要。
+   */
+  async ensureUpdateSettings(): Promise<BacklogUpdateSettings | undefined> {
+    const {outputDirectory} = this.getConfig()
+
+    let apiKey = await this.getApiKey()
+    if (!apiKey) {
+      const input = await vscode.window.showInputBox({
+        ignoreFocusOut: false,
+        password: true,
+        prompt: 'Backlog API キーを入力してください',
+      })
+      if (!input) {
+        return undefined
+      }
+
+      await this.setApiKey(input)
+      apiKey = input
+    }
+
+    return {apiKey, outputDirectory}
   }
 
   async getApiKey(): Promise<string | undefined> {

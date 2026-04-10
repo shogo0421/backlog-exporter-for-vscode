@@ -297,8 +297,8 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
       return
     }
 
-    const exportSettings = await this.configManager.ensureExportSettings()
-    if (!exportSettings) {
+    const updateSettings = await this.configManager.ensureUpdateSettings()
+    if (!updateSettings) {
       return
     }
 
@@ -307,7 +307,7 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
       return
     }
 
-    const outputDir = resolveOutputDir(workspaceFolder, exportSettings.outputDirectory)
+    const outputDir = resolveOutputDir(workspaceFolder, updateSettings.outputDirectory)
 
     this._cancelTokenSource = new vscode.CancellationTokenSource()
     this._setRunning(true)
@@ -316,11 +316,9 @@ export class PanelViewProvider implements vscode.WebviewViewProvider {
     try {
       await runBacklogExporter(
         {
-          apiKey: exportSettings.apiKey,
+          apiKey: updateSettings.apiKey,
           command: 'update',
-          domain: exportSettings.domain,
           outputDir,
-          projectIdOrKey: exportSettings.projectIdOrKey,
         },
         this.outputChannel,
         {
