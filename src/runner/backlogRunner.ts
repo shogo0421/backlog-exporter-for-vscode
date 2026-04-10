@@ -7,9 +7,9 @@ export type BacklogCommand = 'all' | 'document' | 'issue' | 'update' | 'wiki'
 export interface RunOptions {
   apiKey: string
   command: BacklogCommand
-  domain: string
+  domain?: string
   outputDir: string
-  projectIdOrKey: string
+  projectIdOrKey?: string
 }
 
 /**
@@ -48,9 +48,9 @@ export function runBacklogExporter(
     const args: string[] = [runScript, options.command]
 
     if (options.command === 'update') {
-      args.push(options.outputDir, '--force', '--domain', options.domain, '--projectIdOrKey', options.projectIdOrKey)
+      args.push(options.outputDir, '--force')
     } else {
-      args.push('--domain', options.domain, '--projectIdOrKey', options.projectIdOrKey, '--output', options.outputDir)
+      args.push('--domain', options.domain!, '--projectIdOrKey', options.projectIdOrKey!, '--output', options.outputDir)
     }
 
     const displayArgs = args.slice(1).join(' ')

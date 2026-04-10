@@ -9,9 +9,9 @@
     "markdown",
     "cursor"
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "shibuya-shogo",
-  "icon": "media/logo.png",
+  "icon": "media/images/logo.png",
   "categories": [
     "Other"
   ],
@@ -29,7 +29,7 @@
         {
           "id": "backlogExporter",
           "title": "Backlog Exporter",
-          "icon": "media/icon.svg"
+          "icon": "media/images/icon.svg"
         }
       ]
     },
@@ -86,11 +86,12 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run build",
-    "build": "vite build --mode production",
-    "compile": "vite build --mode development",
+    "vscode:prepublish": "npm run build:prod",
+    "build:prod": "vite build --mode production",
+    "build:dev": "vite build --mode development",
     "watch": "vite build --watch --mode development",
-    "package": "npm run build && vsce package",
+    "package": "npm run build:prod && vsce package",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint"
