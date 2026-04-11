@@ -6,7 +6,7 @@ CLIツールのbacklog-exporter(https://github.com/ShuntaToda/backlog-exporter) 
 
 エクスポートしたデータを、Copilot や Cursor などの AI ツールから参照して、コンテキストとして活用できます。
 
-<img src="https://github.com/shogo0421/backlog-exporter-for-vscode/blob/main/media/images/demo.png?raw=true" />
+<img src="https://raw.githubusercontent.com/shogo0421/backlog-exporter-for-vscode/refs/heads/main/media/images/demo.png" />
 
 ---
 
